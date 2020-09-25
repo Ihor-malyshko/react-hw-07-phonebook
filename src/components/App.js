@@ -8,31 +8,21 @@ import ContactForm from './contactForm/ContactForm';
 import Filter from './filter/Filter';
 import Alert from './Alert/Alert';
 import contactOperation from '../redux/contact/contactOperation';
+import contactSelector from '../redux/contact/contactSelector';
 
 class App extends Component {
-  state = {
-    alert: false,
-  };
-
   componentDidMount() {
     this.props.fetchContacs();
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevProps.contacts !== this.props.contacts) {
-  //     localStorage.setItem('contacts', JSON.stringify(this.props.contacts));
-  //   }
-  // }
-
   render() {
-    const { alert } = this.state;
     const { contacts } = this.props;
 
     return (
       <>
         <Logo />
         <Section>
-          <Alert isVisible={alert} />
+          <Alert isVisible={false} />
           <ContactForm />
         </Section>
 
@@ -49,7 +39,7 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    contacts: state.contact.items,
+    contacts: contactSelector.getItems(state),
   };
 };
 

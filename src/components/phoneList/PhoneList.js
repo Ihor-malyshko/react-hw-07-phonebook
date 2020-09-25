@@ -2,17 +2,18 @@ import React from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
 import contactOperation from '../../redux/contact/contactOperation';
+import contactSelector from '../../redux/contact/contactSelector';
 import s from './PhoneList.module.css';
 
-const filterContacs = (items, filter) => {
-  const normalizeSearch = filter.toLowerCase();
-  return items.filter(item =>
-    item.name.toLowerCase().includes(normalizeSearch),
-  );
-};
+// const filterContacs = (items, filter) => {
+//   const normalizeSearch = filter.toLowerCase();
+//   return items.filter(item =>
+//     item.name.toLowerCase().includes(normalizeSearch),
+//   );
+// };
 
-const PhoneList = ({ contact, filter, onRemoveContact }) => {
-  const items = filterContacs(contact, filter);
+const PhoneList = ({ items, filter, onRemoveContact }) => {
+  // const items = filterContacs(contact, filter);
   return (
     <TransitionGroup component="ul" className={s.taskList}>
       {items.map(({ id, name, number }) => {
@@ -37,12 +38,10 @@ const PhoneList = ({ contact, filter, onRemoveContact }) => {
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    contact: state.contact.items,
-    filter: state.contact.filter,
-  };
-};
+const mapStateToProps = state => ({
+  items: contactSelector.getFilteredContacts(state),
+  // filter: state.contact.filter,
+});
 
 const mapDispatchToprops = dispatch => ({
   onRemoveContact: id => dispatch(contactOperation.removeContact(id)),

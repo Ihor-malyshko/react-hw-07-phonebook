@@ -2,6 +2,7 @@ import React from 'react';
 import withTransition from '../hoc/withTransition';
 import { connect } from 'react-redux';
 import contactActions from '../../redux/contact/contactActions';
+import contactSelector from '../../redux/contact/contactSelector';
 import s from './Filter.module.css';
 
 const Filter = props => {
@@ -24,7 +25,7 @@ const Filter = props => {
 
 const mapStateToProps = state => {
   return {
-    filter: state.contact.filter,
+    filter: contactSelector.getFilter(state),
   };
 };
 
