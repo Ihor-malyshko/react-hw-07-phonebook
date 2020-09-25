@@ -7,17 +7,22 @@ import PhoneList from './phoneList/PhoneList';
 import ContactForm from './contactForm/ContactForm';
 import Filter from './filter/Filter';
 import Alert from './Alert/Alert';
+import contactOperation from '../redux/contact/contactOperation';
 
 class App extends Component {
   state = {
     alert: false,
   };
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.contacts !== this.props.contacts) {
-      localStorage.setItem('contacts', JSON.stringify(this.props.contacts));
-    }
+  componentDidMount() {
+    this.props.fetchContacs();
   }
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevProps.contacts !== this.props.contacts) {
+  //     localStorage.setItem('contacts', JSON.stringify(this.props.contacts));
+  //   }
+  // }
 
   render() {
     const { alert } = this.state;
@@ -48,4 +53,8 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, null)(App);
+const mapDispatchToProps = {
+  fetchContacs: contactOperation.fetchContacs,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
