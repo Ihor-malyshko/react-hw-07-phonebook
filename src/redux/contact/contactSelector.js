@@ -6,15 +6,11 @@ const isLoading = state => state.contact.loadingReducer;
 
 const getFilter = state => state.contact.filter;
 
-const getFilteredContacts = createSelector(
-  [getFilter, getItems],
-  (filter, items) => {
-    const normalizeSearch = filter.toLowerCase();
-    return items.filter(item =>
-      item.name.toLowerCase().includes(normalizeSearch),
-    );
-  },
-);
+const getFilteredContacts = state => {
+  const filter = getFilter(state).toLowerCase();
+  const items = getItems(state);
+  return items.filter(item => item.name.toLowerCase().includes(filter));
+};
 
 export default {
   getItems,
